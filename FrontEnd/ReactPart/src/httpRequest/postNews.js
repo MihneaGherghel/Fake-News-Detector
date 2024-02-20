@@ -1,12 +1,7 @@
 import { getAuthToken } from "../util/auth"
 
 export async function urlFakeNewsPercentages(url){
-    console.log(1)
-    let token=getAuthToken();
-    if(token==null){
-        token=""
-    }
-    console.log(token)
+    const token=getAuthToken();
     const response=await fetch('http://localhost:3000/url',{
         method:'POST',
         body: JSON.stringify({url:url}),
