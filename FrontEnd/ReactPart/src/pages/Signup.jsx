@@ -15,8 +15,8 @@ export default function Signup(){
     }
     const inputs=[
         {id:"email",label:"email",img:"./email.svg",type:"email"},
+        {id:"password",label:"Password",img:"./password.svg",type:"password"},
         {id:"confirmPassword",label:"Confirm Password",img:"./password.svg",type:"password"},
-        {id:"password",label:"Password",img:"./password.svg",type:"password"}
     ]
     return (
         <Form inputs={inputs} title={"Sign up"} otherAction={"Login"} otherButton={"LOGIN"} toOtherButton={"/login"} handleSubmit={handleSubmit} submitResponse={signupResponse}/>

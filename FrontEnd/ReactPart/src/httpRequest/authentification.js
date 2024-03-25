@@ -10,23 +10,32 @@ export async function signUp(email,password, confirmPassword){
             'Content-Type':'application/json'
         }
     })
-    return await response.json()
+    const value=await response.json()
+    return value
 }
 
 export async function login(email,password){
-    const response=await fetch('http://localhost:3000/login',{
-        method:'POST',
-        body: JSON.stringify({
+    try{
+        const response=await fetch('http://localhost:3000/login',{
+            method:'POST',
+            body: JSON.stringify({
             email:email,
             password:password
-        }),
-        headers:{
-            'Content-Type':'application/json'
+            }),
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        const value=await response.json()
+        if(value.error==="Server error"){
+            window.location.href='http://localhost:5173/serverError'
         }
-    })
-    const value=await response.json()
-    const token=value.token
-    localStorage.setItem('token',token)
-
-    return value
+        const letter=value.letter
+        const token=value.token
+        localStorage.setItem('letter',letter)
+        localStorage.setItem('token',token)
+        return value
+    }catch(error){
+        window.location.href='http://localhost:5173/serverError'
+    }
 }

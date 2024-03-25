@@ -11,6 +11,9 @@ export async function urlFakeNewsPercentages(url){
         }
     })
     const resData= await response.json()
+    if(resData.error==="Server error"){
+        window.location.href='http://localhost:5173/serverError'
+    }
     if(resData.message){
         return resData.message
     }
@@ -28,6 +31,9 @@ export async function titleAndTextFakeNewsPercentages(title,text){
         }
     })
     const resData= await response.json()
+    if(resData.error==="Server error"){
+        window.location.href='http://localhost:5173/serverError'
+    }
     if(resData.message){
         return resData.message
     }

@@ -1,10 +1,10 @@
 const express = require('express');
-const {checkAuthMiddleware} = require("../utils/utilLogin")
+const {checkAuthMiddlewareNews} = require("../utils/utilLogin")
 const router = express.Router();
 const {detectFakeNewsUsingTestandTitle,detectFakeNewsUsingUrl} = require("../controllers/fakeNews")
 
 // check authentification 
-router.use(checkAuthMiddleware);
+router.use(checkAuthMiddlewareNews);
 
 // route for fake news detection using text and title
 router.post("/textAndTitle",detectFakeNewsUsingTestandTitle)

@@ -10,7 +10,6 @@ export default function Form({inputs,title,otherAction,otherButton,toOtherButton
             if(submitResponse.mistakes){
                 for(let i=0;i<inputs.length;i++){
                     inputs[i].error=submitResponse.mistakes[inputs[i].id]
-                    console.log(inputs[i].error);
                 }   
             }
         }

@@ -56,8 +56,8 @@ export default function FormTextTitlePage(){
                     and text and provide a response.
                 </p>
                 <Form handleSubmit={handleSubmit} handleReset={handleReset} formData={formData} error={error}/>
-                 {serverError=="" && response>=0 && <Response response={response}/>}
-                 {serverError!="" && <p class="text-center text-red-500">{serverError}</p>}
+                 {!error.title && !error.text && serverError=="" && response>=0 && <Response response={response}/>}
+                 {!error.title && !error.text && serverError!="" && <p class="text-center text-red-500">{serverError}</p>}
             </div>
             <div class="absolute bg-[url('./aiHumanoid.jpg')] bg-cover w-4/12 h-[55rem] left-[800px] top-24 rounded-tl-xl rounded-bl-xl "></div>
         </main>

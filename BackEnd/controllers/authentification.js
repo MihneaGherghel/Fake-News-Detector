@@ -5,7 +5,6 @@ const {createJSONToken, isValidPassword}=require("../utils/utilLogin")
 
 // asynchronous function for handling login
 module.exports.login=async (req,res)=>{
-
     // retrive email and password from req.body
     const {email,password}=req.body;
     let user;
@@ -13,7 +12,13 @@ module.exports.login=async (req,res)=>{
     try {
         user = await db.query('SELECT * FROM users WHERE users.email=(?)',[[email]]);
     } catch (error) {
-        return res.status(500).json({ error:'Server error', message: 'Authentication failed. Try again later' });
+        return res.status(500).json({ error:'Server error', message: 'Server error: Authentication failed. Try again later' });
+    }
+    if(user[0][0]==undefined){
+        return res.status(422).json({
+            error: 'Invalid credentials.',
+            message: 'Invalid email or password entered.',
+        });
     }
     const passwordIsValid = await isValidPassword(password, user[0][0].password);
     if (!passwordIsValid) {
@@ -24,7 +29,8 @@ module.exports.login=async (req,res)=>{
     }
     // create and send JSON web token 
     const token = createJSONToken(email);
-    res.json({ message:"You are log in", token:token });
+    const letter=email.charAt(0)
+    res.json({ message:"You are log in", token:token,letter:letter.toUpperCase() });
 }
 
 // asynchronous function for handling signup
@@ -49,7 +55,7 @@ module.exports.signup=async (req,res)=>{
         }
 
     } catch (error) {
-        return res.status(500).json({ error:" Server error",message: 'Sign up failed. Try again later.' });
+        return res.status(500).json({ error:" Server error",message: 'Server error:Sign up failed. Try again later.' });
     }
 
     // add the user to the database
@@ -62,6 +68,6 @@ module.exports.signup=async (req,res)=>{
         await db.query('INSERT INTO fake_news.users_accounts (user_id,account_id,attempts) VALUES (?)',[data]);
         return res.status(200).send({message:"User was added"});
     }catch(error){
-        return res.status(500).send({error:"Server error", message:'Sign up failed. Try again later.'})
+        return res.status(500).send({error:"Server error", message:'Server error: Sign up failed. Try again later.'})
     }
 }

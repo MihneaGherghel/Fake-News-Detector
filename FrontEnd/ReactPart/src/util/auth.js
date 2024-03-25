@@ -5,4 +5,6 @@ export function getAuthToken(){
 
 export function deleteAuthToken(){
     localStorage.removeItem("token")
+    localStorage.removeItem("letter")
+    window.location.href='http://localhost:5173/'
 }

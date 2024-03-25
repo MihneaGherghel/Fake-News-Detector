@@ -6,6 +6,11 @@ import FormLinkPage from './pages/FormLinkPage';
 import RootLayout from "./pages/Root";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Subscription from "./pages/Subscription";
+import SuccessPayment from "./pages/SuccessPayment";
+import ErrorPayment from "./pages/ErrorPayment";
+import ServerError from "./pages/ServerError";
+
 import { LoginContext } from "./store/login";
 import { useState } from "react";
 
@@ -18,7 +23,11 @@ const router=createBrowserRouter([
       { path:'/formLinkPage', element:<FormLinkPage/>},
       { path:'/formTextTitlePage', element:<FormTextTitlePage/>},
       { path:'/login', element:<Login/>},
-      { path:'/signup', element:<Signup/>}
+      { path:'/signup', element:<Signup/>},
+      { path:'/subscription', element:<Subscription/>},
+      { path:'/successPayment', element:<SuccessPayment/>},
+      { path:'/errorPayment', element:<ErrorPayment/>},
+      {path:'/serverError', element:<ServerError/>},
     ]
   },
 ])
