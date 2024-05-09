@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Fast Check Extension",
+    "version": "1.0.0",
+    "description": "You can enter the news and see if it's fake news or not using AI.",
+    "action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "scripting",
+        "tabs",
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+    "icons": {
+        "16": "logo.png",
+        "32": "logo.png",
+        "48": "logo.png",
+        "128": "logo.png"
+    }
+  }

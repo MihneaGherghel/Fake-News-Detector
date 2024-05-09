@@ -20,7 +20,6 @@ def tokenize_news(data):
 
 def tfidf_news(data):
     data = preprocessing(data)
-    print(data)
     with open("./trainData/tfidf.pkl", "rb") as f:
         tfidf = pickle.load(f)
     data = [data]

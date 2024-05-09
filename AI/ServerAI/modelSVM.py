@@ -9,7 +9,6 @@ import sklearn
 def modelSVM(data):
     data = word2vec_news(data)
     data = np.array(data).squeeze().tolist()
-    print(data)
     with open('./trainData/svm_linear_classifier.pkl', 'rb') as f:
         modelSVM = pickle.load(f)
     prediction = modelSVM.predict_proba([data])

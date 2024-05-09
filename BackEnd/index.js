@@ -2,6 +2,7 @@ const express = require('express');
 const fakeNewsRoutes = require('./routes/fakeNews');
 const authentificationRoutes=require('./routes/authentification')
 const stripeRoutes=require('./routes/stripe')
+const profileRoutes=require('./routes/profile')
 const app = express();
 
 // Middleware for CORS support 
@@ -28,12 +29,15 @@ app.use((req, res, next) => {
 //  middleware parses this encoded data and makes it available in req.body
 app.use(express.urlencoded({ extended: true }));
 
-// middleware for make subscriptio
+// middleware for make subscription
 app.use(stripeRoutes)
 
 // middleware parses this json data and makes it available in req.body
 app.use(express.json());
 
+
+//middleware for profile
+app.use(profileRoutes)
 
 // middleware for auth
 app.use(authentificationRoutes)

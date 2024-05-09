@@ -2,8 +2,6 @@ from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 import re
 import nltk
-nltk.download('stopwords')
-nltk.download('wordnet')
 
 
 def lower_characters_and_delete_punctutation(sentence):

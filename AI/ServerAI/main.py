@@ -1,25 +1,32 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from bs4 import BeautifulSoup
-import re
+from fastapi import FastAPI
+from pydantic import BaseModel
+from modelRandomForest import modelRandomForest
 import requests
-from modelTransformer import modelData
+from GPTZero.infer import detectAIText
 
-app = Flask(__name__)
-CORS(app)
-
-
-@app.route('/fakeNewsUsingTitleAndText', methods=['POST'])
-def fakeNewsDetector():
-    data = request.json
-    title = data['title']
-    text = data['text']
-    prediction = modelData(title + " " + text)
-    prediction_rounded = round(prediction, 3)*100
-    return jsonify(prediction_rounded), 200
+app = FastAPI()
 
 
-def extractData(url):
+class TextandTitle(BaseModel):
+    title: str
+    text: str
+
+
+class URL(BaseModel):
+    url: str
+
+
+@app.post("/fakeNewsUsingTitleAndText")
+def fakeNewsDetector(data: TextandTitle):
+    title, text = data.title, data.text
+    aiGeneratedText = detectAIText(text)
+    prediction = modelRandomForest(title + " " + text)
+    prediction_rounded = round(prediction, 4)*100
+    return {"prediction_rounded": prediction_rounded, "title": title, "text": text, "generatedByAI": aiGeneratedText[1]}
+
+
+def extractData(url: str):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html5lib')
     title = soup.title.text.strip()
@@ -29,14 +36,13 @@ def extractData(url):
     return title, text_content
 
 
-@app.route('/fakeNewsUsingURL', methods=['POST'])
-def fakeNewsDetectorURL():
-    data = request.json
-    url = data['url']
-    title, text = extractData(url)
-    prediction = modelData(title + " " + text)
-    prediction_rounded = round(prediction, 3)*100
-    return jsonify(prediction_rounded), 200
+@app.post("/fakeNewsUsingURL")
+def fakeNewsDetectorURL(data: URL):
+    title, text = extractData(data.url)
+    prediction = modelRandomForest(title + " " + text)
+    aiGeneratedText = detectAIText(text)
+    prediction_rounded = round(prediction, 4)*100
+    return {"prediction_rounded": prediction_rounded, "title": title, "text": text, "generatedByAI": aiGeneratedText[1]}
 
 
 if __name__ == "__main__":

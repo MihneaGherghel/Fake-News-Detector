@@ -1,6 +1,6 @@
 const express=require("express");
 const { createCheckoutSession, afterPayment } = require("../controllers/stripe");
-const checkAuthMiddlewareSubscription = require("../utils/utilLogin").checkAuthMiddlewareSubscription
+const { checkAuthMiddlewareSubscription } = require("../utils/authentification/checkAuthSubscription");
 
 
 const router = express.Router();
